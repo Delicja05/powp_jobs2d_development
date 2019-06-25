@@ -6,11 +6,19 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.manager.CommandHistory;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.observer.Subscriber;
 
@@ -71,6 +79,28 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.gridx = 0;
 		c.weighty = 1;
 		content.add(btnClearObservers, c);
+		
+		DefaultListModel model = new DefaultListModel();
+		CommandHistory.setListModel(model);
+		JList commandHistoryList = new JList(model);
+		commandHistoryList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		commandHistoryList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                if (e.getValueIsAdjusting() == false) {
+
+                    if (commandHistoryList.getSelectedIndex() != -1) {
+                        int index = commandHistoryList.getSelectedIndex();
+                        List<DriverCommand> commands = CommandHistory.getCommandsFromList(index);
+                        String commandsName = CommandHistory.getCommandsNameFromList(index);
+
+                        commandManager.setCurrentCommand(commands,commandsName);
+                    }
+                }
+            }
+        });
+			content.add(new JScrollPane(commandHistoryList), c);
 	}
 
 	private void clearCommand() {

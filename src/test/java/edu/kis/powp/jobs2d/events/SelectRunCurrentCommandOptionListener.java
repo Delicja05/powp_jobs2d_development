@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.manager.CommandHistory;
 import edu.kis.powp.jobs2d.drivers.DriverManager;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 
@@ -18,6 +19,8 @@ public class SelectRunCurrentCommandOptionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		DriverCommand command = CommandsFeature.getDriverCommandManager().getCurrentCommand();
+		if(!CommandHistory.logMode)
+			CommandHistory.addEntry(CommandsFeature.getDriverCommandManager().getCommandList(),CommandsFeature.getDriverCommandManager().getCommandName());
 		command.execute(driverManager.getCurrentDriver());
 	}
 }

@@ -13,6 +13,8 @@ public class DriverCommandManager {
 	private DriverCommand currentCommand = null;
 
 	private Publisher changePublisher = new Publisher();
+	private List<DriverCommand> commandList;
+	private String comamandName;
 
 	/**
 	 * Set current command.
@@ -31,6 +33,9 @@ public class DriverCommandManager {
 	 * @param name        name of the command.
 	 */
 	public synchronized void setCurrentCommand(List<DriverCommand> commandList, String name) {
+		this.commandList = commandList;
+		this.comamandName = name;
+		
 		ComplexCommand complexCommand = new ComplexCommand(commandList, name);
 		setCurrentCommand(complexCommand);
 	}
@@ -42,6 +47,14 @@ public class DriverCommandManager {
 	 */
 	public synchronized DriverCommand getCurrentCommand() {
 		return currentCommand;
+	}
+	
+	public synchronized List<DriverCommand> getCommandList(){
+		return commandList;
+	}
+	
+	public synchronized String getCommandName(){
+		return comamandName;
 	}
 
 	public synchronized void clearCurrentCommand() {
