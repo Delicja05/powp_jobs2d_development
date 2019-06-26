@@ -66,6 +66,10 @@ public class TestJobs2dApp {
 		driver = new LineDriverAdapter(drawerController, LineFactory.getSpecialLine(), "special");
 		DriverFeature.addDriver("Special line Simulator", driver);
 		DriverFeature.updateDriverInfo();
+		
+		driver = new LineDriverAdapter(drawerController, LineFactory.getDottedLine(), "dotted");
+		DriverFeature.addDriver("4 driver", driver);
+		DriverFeature.updateDriverInfo();
 	}
 
 	private static void setupWindows(Application application) {
