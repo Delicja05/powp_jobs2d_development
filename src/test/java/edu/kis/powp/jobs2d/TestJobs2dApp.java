@@ -15,6 +15,7 @@ import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.DriverRecorder;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
+import edu.kis.powp.jobs2d.events.SelectLoadRecorderCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
@@ -76,6 +77,8 @@ public class TestJobs2dApp {
 		driver = new DriverRecorder(list, "recorder");
 		DriverFeature.addDriver("Driver Recorder", driver);
 		DriverFeature.updateDriverInfo();
+		application.addTest("Load recorder command", new SelectLoadRecorderCommandOptionListener(
+				DriverFeature.getDriverManager(),(DriverRecorder) driver));
 	}
 
 	private static void setupWindows(Application application) {

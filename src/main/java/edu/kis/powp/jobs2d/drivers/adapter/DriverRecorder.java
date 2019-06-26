@@ -20,7 +20,6 @@ public class DriverRecorder implements Job2dDriver{
 		this.name = name;
 	}
 
-
 	@Override
 	public void setPosition(int x, int y) {
 		list.add(new SetPositionCommand(x, y));
@@ -31,7 +30,7 @@ public class DriverRecorder implements Job2dDriver{
 		list.add(new OperateToCommand(x, y));
 	}
 	
-	public ComplexCommand getList() {
+	public DriverCommand getRecorderCommand() {
 		return new ComplexCommand(list, name);
 	}
 
